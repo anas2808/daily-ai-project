@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navigation Bar</title>
+    <style>
+        /* Basic Reset & Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent */
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative; /* Needed for positioning the mobile menu */
+            z-index: 1000; /* Ensure navbar is on top */
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Navigation List (Desktop) */
+        .nav-list {
+            display: flex;
+            gap: 20px; /* Space between links */
+            transition: all 0.3s ease-out; /* Smooth transition for mobile menu */
+        }
+
+        .nav-list li a {
+            padding: 0.5rem 1rem;
+            display: block;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .nav-list li a:hover {
+            background-color: #555;
+        }
+
+        /* Mobile Menu Toggle (Hamburger Icon) */
+        .menu-toggle {
+            display: none; /* Hidden by default on desktop */
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1001; /* Ensure toggle is above menu if positioned absolute */
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap; /* Allow items to wrap */
+                padding: 1rem;
+            }
+
+            .logo {
+                flex-grow: 1; /* Allow logo to take available space on left */
+            }
+
+            .menu-toggle {
+                display: flex; /* Show hamburger icon on mobile */
+            }
+
+            .nav-list {
+                /* Initially hidden and stacked for mobile */
+                display: flex; /* Kept flex so we can set flex-direction */
+                flex-direction: column;
+                width: 100%;
+                background-color: #444; /* Slightly darker background for mobile menu */
+                max-height: 0; /* Hide by default using max-height for transition */
+                overflow: hidden;
+                position: absolute;
+                top: 100%; /* Position below the navbar */
+                left: 0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                border-top: 1px solid #555; /* Separator from navbar */
+            }
+
+            .nav-list.active {
+                max-height: 300px; /* Adjust based on number of menu items. Larger value ensures all items are visible. */
+                transition: max-height 0.5s ease-in-out;
+            }
+
+            .nav-list li {
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-list li a {
+                padding: 1rem;
+                border-bottom: 1px solid #555; /* Separator for mobile links */
+            }
+
+            .nav-list li:last-child a {
+                border-bottom: none; /* No border for the last item */
+            }
+
+            .nav-list li a:hover {
+                background-color: #666;
+            }
+
+            /* Hamburger icon animation when active */
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: translateY(11px) rotate(45deg);
+            }
+
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: translateY(-11px) rotate(-45deg);
+            }
+        }
+
+        /* Main content for demonstration */
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        main h1 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        main p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">MyBrand</a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list" id="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Welcome to My Website!</h1>
+        <p>This is a demonstration of a responsive navigation bar crafted by a fresher student.</p>
+        <p>On larger screens (desktop/tablet), you'll see a horizontal navigation menu. When you resize your browser window to a smaller width (like on a mobile phone), the menu will transform into a "hamburger" icon. Click the icon to toggle the navigation menu.</p>
+        <p>This project uses HTML for structure, CSS for styling and responsiveness (including media queries and transitions), and a small amount of JavaScript to handle the mobile menu toggle.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et elit adipiscing dictum. Nunc sit amet elit sit amet lacus feugiat dictum id ac tellus. Salus populi suprema lex esto.</p>
+        <p>Proin at sem at turpis egestas luctus. Ut nec nisl. Mauris mollis egestas nulla. Proin magna nulla, mollis eget, rutrum id, fermentum eu, nulla. Quisque congue. Proin et massa id nisl semper interdum. Fusce molestie enim at leo.</p>
+    </main>
+
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+
+        mobileMenu.addEventListener('click', () => {
+            navList.classList.toggle('active'); // Toggles the visibility of the nav list
+            mobileMenu.classList.toggle('active'); // Toggles class for hamburger icon animation
+        });
+
+        // Optional: Close the mobile menu when a navigation link is clicked
+        const navLinks = document.querySelectorAll('#nav-list li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Only close the menu if it's currently open and on a small screen
+                if (navList.classList.contains('active') && window.innerWidth <= 768) {
+                    navList.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
