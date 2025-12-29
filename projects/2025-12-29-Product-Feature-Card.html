@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Feature Card</title>
+    <style>
+        /* Basic reset and typography */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; /* Light background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container for the card to provide padding and limit width */
+        .feature-card-container {
+            padding: 20px;
+            max-width: 380px; /* Maximum width for the card */
+            width: 100%; /* Make it responsive */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        /* Styling for the main feature card */
+        .feature-card {
+            background-color: #ffffff;
+            border-radius: 16px; /* Rounded corners for a modern look */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            padding: 40px 30px; /* Generous internal padding */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+        }
+
+        /* Hover effect for the card */
+        .feature-card:hover {
+            transform: translateY(-5px); /* Lift card slightly */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+        }
+
+        /* Icon wrapper styling */
+        .feature-icon {
+            margin-bottom: 25px;
+            display: inline-flex; /* Use flexbox to center SVG if it's the only child */
+            background-color: #e6f7ea; /* Light background for the icon */
+            border-radius: 50%; /* Make the background circular */
+            padding: 15px; /* Padding inside the circular background */
+        }
+
+        /* SVG icon styling */
+        .feature-icon svg {
+            color: #28a745; /* Vibrant green color for the icon */
+            width: 50px; /* Icon width */
+            height: 50px; /* Icon height */
+            stroke-width: 2; /* Thicker stroke for better visibility */
+        }
+
+        /* Feature title styling */
+        .feature-title {
+            font-size: 1.9em; /* Larger font size for the title */
+            color: #2c3e50; /* Darker, prominent title color */
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 700; /* Bolder font weight */
+        }
+
+        /* Feature description styling */
+        .feature-description {
+            font-size: 1.05em; /* Slightly larger text for readability */
+            color: #7f8c8d; /* Softer, muted description color */
+            line-height: 1.7; /* Increased line height for better readability */
+            margin-bottom: 30px;
+        }
+
+        /* Call-to-action button styling */
+        .feature-button {
+            display: inline-block; /* Allows padding and width */
+            background-color: #28a745; /* Green button background */
+            color: white; /* White text color */
+            padding: 14px 30px; /* Generous padding for the button */
+            border-radius: 50px; /* Pill-shaped button */
+            text-decoration: none; /* Remove underline from link */
+            font-weight: 600; /* Semi-bold text */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effects */
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2); /* Subtle button shadow */
+        }
+
+        /* Button hover effect */
+        .feature-button:hover {
+            background-color: #218838; /* Darker green on hover */
+            transform: translateY(-2px); /* Lift button slightly */
+        }
+    </style>
+</head>
+<body>
+    <div class="feature-card-container">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <!-- SVG Icon for 'Zap' (Lightning Bolt) from Feather Icons -->
+                <!-- Represents speed, efficiency, or power -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            <h3 class="feature-title">Blazing Fast Performance</h3>
+            <p class="feature-description">
+                Experience unparalleled speed and responsiveness across all your tasks. Our optimized architecture ensures your applications run smoother and load faster than ever before.
+            </p>
+            <a href="#" class="feature-button">Discover More</a>
+        </div>
+    </div>
+</body>
+</html>
