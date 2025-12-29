@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Login Page</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #08081a; /* Very dark blue background */
+            overflow: hidden; /* Hide potential scrollbars from glowing elements */
+        }
+
+        /* Login Container */
+        .login-container {
+            position: relative;
+            width: 380px;
+            height: 480px;
+            background: #0e0e2c; /* Darker blue for the card */
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.7), /* Stronger outer glow */
+                        0 0 60px rgba(0, 240, 255, 0.5),
+                        0 0 100px rgba(0, 240, 255, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+
+        .login-container:hover {
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.9),
+                        0 0 80px rgba(0, 240, 255, 0.7),
+                        0 0 150px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Title */
+        h2 {
+            font-size: 2.2em;
+            color: #00f0ff; /* Bright neon blue */
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00f0ff,
+                         0 0 20px #00f0ff,
+                         0 0 40px #00f0ff,
+                         0 0 80px #00f0ff;
+            transition: 0.3s ease-in-out;
+        }
+
+        .login-container:hover h2 {
+            text-shadow: 0 0 15px #00f0ff,
+                         0 0 30px #00f0ff,
+                         0 0 60px #00f0ff,
+                         0 0 120px #00f0ff;
+        }
+
+        /* Input Group */
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #00f0ff; /* Neon blue bottom border */
+            outline: none;
+            color: #fff; /* White text for input value */
+            font-size: 1em;
+            letter-spacing: 0.1em;
+            transition: 0.5s;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            color: #00f0ff; /* Neon blue for labels */
+            font-size: 1em;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        /* Input Focus/Validation Effects */
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -20px;
+            font-size: 0.8em;
+            color: #fff; /* White label when active */
+            text-shadow: 0 0 5px #fff; /* Subtle glow on label */
+        }
+
+        .input-group input:focus,
+        .input-group input:valid {
+            border-bottom: 2px solid #fff; /* White border on focus */
+            box-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff; /* Input glow */
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            background: #00f0ff; /* Neon blue button background */
+            border: none;
+            border-radius: 5px;
+            color: #0e0e2c; /* Dark text on button */
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff; /* Button glow */
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #fff; /* White background on hover */
+            color: #00f0ff; /* Neon blue text on hover */
+            box-shadow: 0 0 15px #00f0ff,
+                        0 0 30px #00f0ff,
+                        0 0 60px #00f0ff;
+        }
+
+        /* Links (Forgot Password, Sign Up) */
+        .links {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .links a {
+            color: #00f0ff; /* Neon blue links */
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: 0.3s;
+        }
+
+        .links a:hover {
+            color: #fff; /* White on hover */
+            text-shadow: 0 0 5px #00f0ff; /* Subtle glow on link hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form>
+            <div class="input-group">
+                <input type="text" required>
+                <label>Username</label>
+            </div>
+            <div class="input-group">
+                <input type="password" required>
+                <label>Password</label>
+            </div>
+            <button type="submit">Login</button>
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <a href="#">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
