@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Table</title>
+    <style>
+        /* Basic Reset & Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Pricing Table Container */
+        .pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Individual Pricing Card */
+        .pricing-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 30px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card Header */
+        .card-header {
+            margin-bottom: 25px;
+        }
+
+        .plan-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .plan-price {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745; /* A pleasant green */
+            margin: 0;
+        }
+
+        .plan-price span {
+            font-size: 0.5em;
+            font-weight: normal;
+            color: #777;
+        }
+
+        /* Plan Features List */
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            flex-grow: 1; /* Allows the feature list to expand and push button to bottom */
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            color: #555;
+            font-size: 1.1em;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Add checkmark/cross for features */
+        .plan-features li::before {
+            content: '✓';
+            color: #28a745; /* Green checkmark */
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .plan-features li.disabled {
+            color: #aaa;
+            text-decoration: line-through;
+        }
+
+        .plan-features li.disabled::before {
+            content: '✗'; /* Crossmark for disabled */
+            color: #ccc;
+        }
+
+        /* Card Footer & Button */
+        .card-footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* Highlighted Professional Card */
+        .pricing-card.professional {
+            background-color: #007bff; /* A vibrant blue */
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 3px solid #ffc107; /* A contrasting yellow accent */
+        }
+
+        .pricing-card.professional:hover {
+            transform: translateY(-10px) scale(1.05); /* Maintain scale on hover */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .pricing-card.professional .plan-title,
+        .pricing-card.professional .plan-price {
+            color: #fff;
+        }
+
+        .pricing-card.professional .plan-price span {
+            color: #e0e0e0;
+        }
+
+        .pricing-card.professional .plan-features li {
+            color: #e0e0e0;
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .pricing-card.professional .plan-features li::before {
+            color: #ffc107; /* Yellow checkmark for professional card */
+        }
+
+        .pricing-card.professional .plan-features li.disabled {
+            color: #a7b7e6;
+        }
+
+        .pricing-card.professional .plan-features li.disabled::before {
+            color: #a7b7e6;
+        }
+
+        .pricing-card.professional .btn {
+            background-color: #ffc107; /* Yellow button */
+            color: #333;
+        }
+
+        .pricing-card.professional .btn:hover {
+            background-color: #e0a800; /* Darker yellow on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .pricing-table {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                margin-bottom: 20px;
+                max-width: 90%;
+            }
+
+            .pricing-card.professional {
+                transform: scale(1); /* Reset scale on small screens */
+            }
+
+            .pricing-card.professional:hover {
+                 transform: translateY(-10px); /* Only translate on hover for small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-table">
+        <!-- Basic Plan Card -->
+        <div class="pricing-card">
+            <div class="card-header">
+                <h3 class="plan-title">Basic</h3>
+                <p class="plan-price">$19<span>/month</span></p>
+            </div>
+            <ul class="plan-features">
+                <li>10 GB Storage</li>
+                <li>1 User</li>
+                <li>Basic Analytics</li>
+                <li class="disabled">Priority Support</li>
+                <li class="disabled">Custom Branding</li>
+            </ul>
+            <div class="card-footer">
+                <button class="btn">Select Plan</button>
+            </div>
+        </div>
+
+        <!-- Professional Plan Card (Highlighted) -->
+        <div class="pricing-card professional">
+            <div class="card-header">
+                <h3 class="plan-title">Professional</h3>
+                <p class="plan-price">$49<span>/month</span></p>
+            </div>
+            <ul class="plan-features">
+                <li>50 GB Storage</li>
+                <li>5 Users</li>
+                <li>Advanced Analytics</li>
+                <li>Priority Support</li>
+                <li class="disabled">Custom Branding</li>
+            </ul>
+            <div class="card-footer">
+                <button class="btn">Select Plan</button>
+            </div>
+        </div>
+
+        <!-- Enterprise Plan Card -->
+        <div class="pricing-card">
+            <div class="card-header">
+                <h3 class="plan-title">Enterprise</h3>
+                <p class="plan-price">$99<span>/month</span></p>
+            </div>
+            <ul class="plan-features">
+                <li>Unlimited Storage</li>
+                <li>Unlimited Users</li>
+                <li>Premium Analytics</li>
+                <li>24/7 Dedicated Support</li>
+                <li>Custom Branding</li>
+            </ul>
+            <div class="card-footer">
+                <button class="btn">Select Plan</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
