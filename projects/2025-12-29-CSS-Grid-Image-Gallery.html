@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Image Gallery!</title>
+    <style>
+        /* Basic styling for the whole page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5; /* A light grey background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Make sure the body takes at least the full viewport height */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        /* Container for our image gallery */
+        .gallery-container {
+            width: 90%; /* Take 90% of the screen width */
+            max-width: 1200px; /* But don't get too wide on very large screens */
+            margin: auto; /* Center the container horizontally */
+            
+            /* This is the magic for CSS Grid! */
+            display: grid;
+            
+            /* Define columns:
+               'auto-fit' tries to fit as many columns as possible.
+               'minmax(280px, 1fr)' means each column should be at least 280px wide,
+               but can grow to take up equal free space ('1fr'). */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            
+            gap: 20px; /* Space between our image items */
+            padding: 25px;
+            background-color: #ffffff; /* White background for the gallery box */
+            border-radius: 12px; /* Slightly rounded corners for the gallery box */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* A subtle shadow */
+        }
+
+        /* Styling for each image item */
+        .gallery-item {
+            border-radius: 10px; /* Rounded corners for individual image boxes */
+            overflow: hidden; /* Important! Hides parts of the image that go beyond the border-radius */
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08); /* Shadow for each item */
+            position: relative; /* Needed for positioning the title overlay */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation for hover effects */
+            cursor: pointer; /* Indicates it's interactive */
+        }
+
+        /* What happens when you hover over an image item */
+        .gallery-item:hover {
+            transform: translateY(-7px); /* Lift the item up slightly */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Make the shadow bigger */
+        }
+
+        /* Styling for the actual image inside the item */
+        .gallery-item img {
+            width: 100%; /* Image takes full width of its container */
+            height: 250px; /* Fix height for consistency across images */
+            object-fit: cover; /* This makes sure the image covers the area without distortion */
+            display: block; /* Removes extra space below the image */
+            transition: transform 0.3s ease; /* Smooth zoom effect */
+        }
+
+        /* Zoom effect on the image when its parent item is hovered */
+        .gallery-item:hover img {
+            transform: scale(1.08); /* Slightly zoom in the image */
+        }
+
+        /* Styling for the title overlay on images */
+        .image-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); /* Fades from dark at bottom to transparent at top */
+            color: white;
+            padding: 15px 10px 10px;
+            font-size: 1.1em;
+            text-align: center;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.3s ease; /* Smooth fade in/out */
+        }
+
+        /* Show the title when the item is hovered */
+        .gallery-item:hover .image-title {
+            opacity: 1; /* Make it visible */
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <!-- Gallery Item 1 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1549419137-b6a38622112d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YmVhY2h8fHx8fHwxNzAzMzc3MDAy&ixlib=rb-4.0.3&q=80&w=400" alt="Sunny Beach">
+            <div class="image-title">Sunny Beach Day</div>
+        </div>
+        
+        <!-- Gallery Item 2 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1510797204-032f913d07ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9yZXN0fHx8fHx8MTcwMzM3NzAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="Mystical Forest">
+            <div class="image-title">Mystical Forest Path</div>
+        </div>
+
+        <!-- Gallery Item 3 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1506180352726-0e104f767858?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bW91bnRhaW5zZm9nZ3l8fHx8fDE3MDMzNzcwMDI&ixlib=rb-4.0.3&q=80&w=400" alt="Foggy Mountains">
+            <div class="image-title">Majestic Mountains</div>
+        </div>
+
+        <!-- Gallery Item 4 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1517781912999-ed548232c451?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y2l0eXNreXNjYXBlfHx8fHx8MTcwMzM3NzAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="City Skyline">
+            <div class="image-title">Vibrant Cityscape</div>
+        </div>
+        
+        <!-- Gallery Item 5 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1554188208-a53c0722301c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZGZydWl0fHx8fHx8MTcwMzM3NzAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="Delicious Food">
+            <div class="image-title">Yummy Delights</div>
+        </div>
+
+        <!-- Gallery Item 6 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1508213824965-0220684f88e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8b2NlYW5zZWFsaWZlfHx8fHx8MTcwMzM3NzAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="Underwater World">
+            <div class="image-title">Serene Ocean View</div>
+        </div>
+
+        <!-- Gallery Item 7 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YW5pbWFsc2NhdGRvZ3xlbnwwfHx8fHwxNzAzMzc3MDAy&ixlib=rb-4.0.3&q=80&w=400" alt="Cute Animals">
+            <div class="image-title">Playful Animals</div>
+        </div>
+
+        <!-- Gallery Item 8 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1505763604084-255d644d67e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YmlyZHNlYXxlbnwwfHx8fHwxNzAzMzc3MDAy&ixlib=rb-4.0.3&q=80&w=400" alt="Colorful Bird">
+            <div class="image-title">Exotic Birds</div>
+        </div>
+
+        <!-- Gallery Item 9 -->
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1504285496420-534d0263f684?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZGVzZXJ0c3Vuc2V0fHx8fHx8MTcwMzM3NzAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="Desert Sunset">
+            <div class="image-title">Desert Sunset</div>
+        </div>
+    </div>
+</body>
+</html>
