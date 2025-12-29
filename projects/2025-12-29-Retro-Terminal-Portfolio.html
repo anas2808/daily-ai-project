@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Terminal Portfolio</title>
+    <style>
+        /* General body styling */
+        body {
+            background-color: #000; /* Black background */
+            color: #0F0; /* Bright green text */
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', monospace; /* Monospace font for terminal feel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0;
+            overflow: hidden; /* Hide body scrollbars */
+            box-sizing: border-box;
+            text-shadow: 0 0 5px #0F0; /* Subtle green glow on text */
+        }
+
+        /* Terminal container styling */
+        #terminal-container {
+            width: 90%;
+            max-width: 800px; /* Max width for larger screens */
+            height: 600px; /* Fixed height for the terminal window */
+            background-color: #000;
+            border: 2px solid #0F0; /* Green border */
+            padding: 15px;
+            overflow: hidden; /* Manage internal scrolling with #terminal-output */
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); /* Stronger outer glow */
+            resize: both; /* Allow users to resize the terminal window */
+            min-width: 400px;
+            min-height: 300px;
+        }
+
+        /* Output area for commands and results */
+        #terminal-output {
+            flex-grow: 1; /* Allows output to take available space */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-bottom: 10px;
+            white-space: pre-wrap; /* Preserves whitespace and wraps long lines */
+            word-wrap: break-word; /* Ensures long words also wrap */
+            
+            /* Custom scrollbar styles for Firefox */
+            scrollbar-color: #0F0 #000;
+            scrollbar-width: thin;
+        }
+
+        /* Custom scrollbar styles for Webkit browsers (Chrome, Edge, Safari) */
+        #terminal-output::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+        }
+
+        #terminal-output::-webkit-scrollbar-track {
+            background: #000; /* Track background */
+        }
+
+        #terminal-output::-webkit-scrollbar-thumb {
+            background-color: #0F0; /* Scrollbar color */
+            border: 1px solid #0F0; /* Border around the thumb */
+        }
+
+        /* Input line styling */
+        #terminal-input-line {
+            display: flex;
+            align-items: baseline; /* Align prompt and input text vertically */
+        }
+
+        /* Prompt text (e.g., ">") */
+        .prompt {
+            color: #0F0;
+            margin-right: 5px;
+        }
+
+        /* User input field */
+        #terminal-input {
+            background-color: transparent; /* No background */
+            border: none; /* No border */
+            color: #0F0;
+            font-family: inherit; /* Inherit font from body */
+            font-size: inherit; /* Inherit font size */
+            outline: none; /* Remove focus outline */
+            flex-grow: 1; /* Takes up remaining space in the line */
+            caret-color: #0F0; /* Green blinking cursor */
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal-container">
+        <div id="terminal-output">
+            <!-- Initial greeting messages -->
+            <pre>Retro Terminal Portfolio v1.0</pre>
+            <pre>Type 'help' for a list of commands.</pre>
+            <br>
+        </div>
+        <div id="terminal-input-line">
+            <span class="prompt">></span>
+            <input type="text" id="terminal-input" autofocus autocomplete="off">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const terminalOutput = document.getElementById('terminal-output');
+            const terminalInput = document.getElementById('terminal-input');
+            const promptSpan = document.querySelector('.prompt');
+
+            let commandHistory = []; // Stores previously entered commands
+            let historyIndex = -1; // Index for navigating command history
+
+            // Portfolio data - customize this!
+            const portfolio = {
+                name: "A Fresh Web Developer",
+                about: "Hello! I'm a passionate fresher web developer eager to build amazing things. I enjoy learning new technologies and solving problems, always striving to create engaging and user-friendly experiences.",
+                skills: [
+                    "HTML5", "CSS3", "JavaScript (ES6+)", "Responsive Design", "Git/GitHub", "Basic UI/UX Principles", "Problem Solving"
+                ],
+                projects: [
+                    { name: "Retro Terminal Portfolio (This one!)", description: "A command-line interface styled portfolio built with HTML, CSS, and vanilla JS to showcase my skills.", link: "#" },
+                    { name: "Interactive Todo List App", description: "A simple web application for managing daily tasks, featuring add, delete, and mark as complete functionalities.", link: "https://example.com/todo-list" },
+                    { name: "Basic Web Calculator", description: "A web-based calculator that performs standard arithmetic operations with a clean interface.", link: "https://example.com/calculator" }
+                ],
+                contact: {
+                    email: "your.email@example.com",
+                    linkedin: "linkedin.com/in/yourprofile",
+                    github: "github.com/yourusername"
+                }
+            };
+
+            // Function to print a line to the terminal output
+            function printLine(message, type = 'default') {
+                const line = document.createElement('pre'); // Use <pre> to maintain whitespace and line breaks
+                line.textContent = message;
+                // Apply specific colors based on message type
+                if (type === 'error') {
+                    line.style.color = '#F00'; // Red for errors
+                } else if (type === 'success') {
+                    line.style.color = '#0F0'; // Green (default, but explicit)
+                } else if (type === 'info') {
+                    line.style.color = '#0FF'; // Cyan for informational messages
+                }
+                terminalOutput.appendChild(line);
+                scrollToBottom(); // Always scroll to the latest output
+            }
+
+            // Function to scroll the terminal output to the bottom
+            function scrollToBottom() {
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+
+            // Define available commands and their functions
+            const commands = {
+                help: () => {
+                    printLine("Available commands:");
+                    printLine("  help     - Show this help message.");
+                    printLine("  about    - Learn more about me.");
+                    printLine("  skills   - List my technical skills.");
+                    printLine("  projects - See some of my work.");
+                    printLine("  contact  - How to get in touch.");
+                    printLine("  clear    - Clear the terminal screen.");
+                    printLine("  whoami   - Display current user context.");
+                },
+                about: () => {
+                    printLine(`Name: ${portfolio.name}`);
+                    printLine(`"${portfolio.about}"`, 'info');
+                },
+                skills: () => {
+                    printLine("My Skills:", 'info');
+                    portfolio.skills.forEach(skill => printLine(`  - ${skill}`));
+                },
+                projects: () => {
+                    printLine("My Projects:", 'info');
+                    portfolio.projects.forEach(project => {
+                        printLine(`  ${project.name}:`);
+                        printLine(`    Description: ${project.description}`);
+                        if (project.link && project.link !== '#') {
+                            printLine(`    Link: ${project.link}`);
+                        }
+                    });
+                },
+                contact: () => {
+                    printLine("Get in touch:", 'info');
+                    printLine(`  Email: ${portfolio.contact.email}`);
+                    printLine(`  LinkedIn: ${portfolio.contact.linkedin}`);
+                    printLine(`  GitHub: ${portfolio.contact.github}`);
+                },
+                clear: () => {
+                    terminalOutput.innerHTML = ''; // Clear all content from the output area
+                },
+                whoami: () => {
+                    printLine("user@retro-terminal:~/$");
+                }
+            };
+
+            // Function to execute a given command
+            function executeCommand(command) {
+                const parts = command.trim().split(' ');
+                const cmd = parts[0].toLowerCase(); // Get the command name
+                const args = parts.slice(1); // Get any arguments
+
+                if (commands[cmd]) {
+                    commands[cmd](...args); // Execute the command function
+                } else {
+                    printLine(`Command not found: ${command}. Type 'help' for available commands.`, 'error');
+                }
+            }
+
+            // Event listener for key presses in the input field
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const command = terminalInput.value.trim();
+                    if (command) {
+                        printLine(`${promptSpan.textContent} ${command}`); // Echo the command typed by the user
+                        commandHistory.push(command); // Add command to history
+                        historyIndex = commandHistory.length; // Reset history index to the end
+                        executeCommand(command); // Execute the command
+                        terminalInput.value = ''; // Clear the input field
+                    } else {
+                        printLine(promptSpan.textContent); // If no command, just print the prompt
+                    }
+                    scrollToBottom(); // Ensure terminal scrolls down
+                } else if (e.key === 'ArrowUp') {
+                    // Navigate up through command history
+                    if (commandHistory.length > 0 && historyIndex > 0) {
+                        historyIndex--;
+                        terminalInput.value = commandHistory[historyIndex];
+                        e.preventDefault(); // Prevent cursor from moving to the start of the input
+                    } else if (commandHistory.length > 0 && historyIndex === 0) {
+                        terminalInput.value = commandHistory[0]; // Stay on the first command
+                        e.preventDefault();
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    // Navigate down through command history
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = commandHistory[historyIndex];
+                        e.preventDefault();
+                    } else if (historyIndex === commandHistory.length - 1) {
+                        historyIndex++; // Move past last command to empty input
+                        terminalInput.value = '';
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            // Initial focus on the input field when the page loads
+            terminalInput.focus();
+
+            // Click anywhere on the document to re-focus the input field
+            document.addEventListener('click', () => {
+                terminalInput.focus();
+            });
+        });
+    </script>
+</body>
+</html>
