@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Slider UI</title>
+    <style>
+        /* Basic Reset & Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #e0f2f7; /* Light blue background */
+            overflow: hidden; /* Prevent body scroll if content is wider */
+        }
+
+        /* Testimonial Slider Container */
+        .testimonial-slider {
+            width: 90%;
+            max-width: 750px; /* Increased max-width for better display */
+            background-color: #ffffff;
+            padding: 40px 30px; /* More padding */
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+            text-align: center;
+            overflow: hidden; /* Crucial for hiding parts of slider-container */
+            position: relative; /* For potential absolute positioning later, though not used much here */
+        }
+
+        /* Inner container for all testimonial cards */
+        .slider-container {
+            display: flex; /* Arranges cards side-by-side */
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother animation curve */
+            /* This container will be translated horizontally by JavaScript */
+        }
+
+        /* Individual Testimonial Card */
+        .testimonial-card {
+            min-width: 100%; /* Each card takes the full width of its parent (.testimonial-slider) */
+            flex-shrink: 0; /* Prevents cards from shrinking */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in the element's total width */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonial-avatar {
+            width: 120px; /* Slightly larger avatar */
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 25px;
+            border: 4px solid #4CAF50; /* A fresh green border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow for avatar */
+        }
+
+        .testimonial-text {
+            font-size: 1.2em; /* Slightly larger text */
+            color: #333333;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-style: italic;
+            max-width: 600px; /* Constrain text width for readability */
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #222222;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .testimonial-designation {
+            font-size: 0.95em;
+            color: #777777;
+        }
+
+        /* Slider Controls (Buttons & Dots) */
+        .slider-controls {
+            display: flex;
+            justify-content: space-between; /* Space between buttons and dots */
+            align-items: center;
+            margin-top: 30px;
+            padding: 0 15px; /* Add some horizontal padding */
+        }
+
+        .prev-btn, .next-btn {
+            background-color: #4CAF50; /* Green buttons */
+            color: white;
+            border: none;
+            padding: 12px 18px; /* Slightly larger buttons */
+            border-radius: 25px; /* More rounded */
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        .dots-container {
+            display: flex;
+            gap: 10px; /* More space between dots */
+            margin: 0 20px; /* Margin to separate from buttons */
+        }
+
+        .dot {
+            width: 12px; /* Slightly larger dots */
+            height: 12px;
+            background-color: #cccccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .dot.active {
+            background-color: #4CAF50; /* Active dot color */
+            transform: scale(1.2); /* Active dot slightly larger */
+        }
+
+        .dot:hover {
+            background-color: #999999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="testimonial-slider">
+        <div class="slider-container">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=1" alt="John Doe" class="testimonial-avatar">
+                <p class="testimonial-text">"This product has truly exceeded my expectations. The user interface is intuitive, and the features are incredibly powerful. A game-changer for my daily tasks!"</p>
+                <p class="testimonial-author">John Doe</p>
+                <p class="testimonial-designation">CEO, Innovate Solutions</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=2" alt="Jane Smith" class="testimonial-avatar">
+                <p class="testimonial-text">"I was skeptical at first, but after using it for a week, I'm genuinely impressed. The customer support is also top-notch, always ready to help!"</p>
+                <p class="testimonial-author">Jane Smith</p>
+                <p class="testimonial-designation">Marketing Lead, Creative Minds</p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=3" alt="Robert Johnson" class="testimonial-avatar">
+                <p class="testimonial-text">"Fantastic experience from start to finish. The quality is superb, and it integrates seamlessly with my existing tools. Highly recommend to everyone!"</p>
+                <p class="testimonial-author">Robert Johnson</p>
+                <p class="testimonial-designation">Senior Developer, Tech Co.</p>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-card">
+                <img src="https://i.pravatar.cc/150?img=4" alt="Emily White" class="testimonial-avatar">
+                <p class="testimonial-text">"A beautifully designed and highly functional product. It's made a significant positive impact on my team's productivity and collaboration."</p>
+                <p class="testimonial-author">Emily White</p>
+                <p class="testimonial-designation">Project Manager, Future Corps</p>
+            </div>
+        </div>
+
+        <div class="slider-controls">
+            <button class="prev-btn">&leftarrow;</button>
+            <div class="dots-container">
+                <!-- Dots will be generated here by JavaScript -->
+            </div>
+            <button class="next-btn">&rightarrow;</button>
+        </div>
+    </div>
+
+    <script>
+        // Get references to DOM elements
+        const sliderContainer = document.querySelector('.slider-container');
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const dotsContainer = document.querySelector('.dots-container');
+
+        // Initialize current index and total number of testimonials
+        let currentIndex = 0;
+        const totalTestimonials = testimonialCards.length;
+
+        // Function to update the slider's position based on currentIndex
+        function updateSlider() {
+            // Calculate the horizontal offset needed to show the current testimonial.
+            // Each testimonial card takes 100% of the slider-container's width.
+            const offset = -currentIndex * 100;
+            sliderContainer.style.transform = `translateX(${offset}%)`;
+
+            // Update the active state of the pagination dots
+            updateDots();
+        }
+
+        // Function to create and initialize the pagination dots
+        function setupDots() {
+            dotsContainer.innerHTML = ''; // Clear any existing dots
+
+            // Create a dot for each testimonial
+            for (let i = 0; i < totalTestimonials; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+
+                // Add 'active' class to the dot corresponding to the current testimonial
+                if (i === currentIndex) {
+                    dot.classList.add('active');
+                }
+
+                // Add click event listener to each dot
+                dot.addEventListener('click', () => {
+                    currentIndex = i; // Set currentIndex to the clicked dot's index
+                    updateSlider(); // Update slider to show the corresponding testimonial
+                });
+
+                dotsContainer.appendChild(dot); // Add dot to the dots container
+            }
+        }
+
+        // Function to update the 'active' class on dots
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active'); // Add active class to the current dot
+                } else {
+                    dot.classList.remove('active'); // Remove active class from others
+                }
+            });
+        }
+
+        // Event listener for the 'Next' button
+        nextBtn.addEventListener('click', () => {
+            // Increment currentIndex, loop back to 0 if it goes beyond the last testimonial
+            currentIndex = (currentIndex + 1) % totalTestimonials;
+            updateSlider(); // Update the slider
+        });
+
+        // Event listener for the 'Previous' button
+        prevBtn.addEventListener('click', () => {
+            // Decrement currentIndex, loop back to the last testimonial if it goes below 0
+            currentIndex = (currentIndex - 1 + totalTestimonials) % totalTestimonials;
+            updateSlider(); // Update the slider
+        });
+
+        // Initial setup calls:
+        setupDots();    // Create and display the pagination dots
+        updateSlider(); // Display the first testimonial and set its dot as active
+    </script>
+</body>
+</html>
