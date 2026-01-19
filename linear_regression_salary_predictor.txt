@@ -1,0 +1,93 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+import pickle
+import os
+
+def load_data(file_path):
+    """
+    Load dataset from a CSV file.
+
+    :param file_path: Path to the CSV file containing the dataset.
+    :return: pandas DataFrame with the loaded data.
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"The file at {file_path} was not found.")
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise IOError(f"Error reading the file: {e}")
+
+def preprocess_data(data):
+    """
+    Preprocess the dataset to separate features and labels.
+
+    :param data: pandas DataFrame containing the dataset.
+    :return: Tuple of features (X) and target variable (y).
+    """
+    if 'YearsExperience' not in data.columns or 'Salary' not in data.columns:
+        raise ValueError("Dataset must contain 'YearsExperience' and 'Salary' columns.")
+    
+    X = data[['YearsExperience']].values
+    y = data['Salary'].values
+    return X, y
+
+def train_model(X, y):
+    """
+    Train the Linear Regression model.
+
+    :param X: Features from the dataset.
+    :param y: Target variable from the dataset.
+    :return: Trained Linear Regression model.
+    """
+    try:
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        model = LinearRegression()
+        model.fit(X_train, y_train)
+        
+        # Evaluate the model
+        y_pred = model.predict(X_test)
+        mse = mean_squared_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+        print(f"Model Evaluation:\nMean Squared Error: {mse:.2f}\nR^2 Score: {r2:.2f}")
+        
+        return model
+    except Exception as e:
+        raise RuntimeError(f"Error training the model: {e}")
+
+def save_model(model, file_path='salary_predictor.pkl'):
+    """
+    Save the trained model to a file.
+
+    :param model: Trained Linear Regression model.
+    :param file_path: Path to save the model file.
+    """
+    try:
+        with open(file_path, 'wb') as file:
+            pickle.dump(model, file)
+        print(f"Model saved to {file_path}")
+    except Exception as e:
+        raise IOError(f"Error saving the model: {e}")
+
+def main():
+    """
+    Main function to execute the salary prediction model training and saving process.
+    """
+    # Define the path to the dataset
+    dataset_path = 'salary_data.csv'
+    
+    # Load and preprocess the data
+    data = load_data(dataset_path)
+    X, y = preprocess_data(data)
+    
+    # Train the model
+    model = train_model(X, y)
+    
+    # Save the model
+    save_model(model)
+
+if __name__ == "__main__":
+    main()
