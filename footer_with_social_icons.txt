@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer with Social Icons</title>
+    <style>
+        /* Reset default margins and paddings */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the footer background and text */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Container for social icons */
+        .social-icons {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Style each social icon link */
+        .social-icons li {
+            margin: 0 10px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        /* Change color on hover */
+        .social-icons a:hover {
+            color: #1da1f2;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Footer Section -->
+    <footer>
+        <p>Connect with us on social media:</p>
+        <ul class="social-icons">
+            <li><a href="https://www.facebook.com" target="_blank" aria-label="Facebook">&#xf09a;</a></li>
+            <li><a href="https://www.twitter.com" target="_blank" aria-label="Twitter">&#xf099;</a></li>
+            <li><a href="https://www.instagram.com" target="_blank" aria-label="Instagram">&#xf16d;</a></li>
+            <li><a href="https://www.linkedin.com" target="_blank" aria-label="LinkedIn">&#xf0e1;</a></li>
+        </ul>
+        <p>&copy; 2023 Your Company Name. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Include Font Awesome for social icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
