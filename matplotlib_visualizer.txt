@@ -1,0 +1,52 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+def generate_sample_data(num_points=100):
+    """
+    Generates sample data for visualization.
+    
+    Args:
+        num_points (int): Number of data points to generate.
+
+    Returns:
+        tuple: Arrays of x and y coordinates.
+    """
+    x = np.linspace(0, 10, num_points)
+    y = np.sin(x) + np.random.normal(0, 0.1, num_points)
+    return x, y
+
+def plot_data(x, y):
+    """
+    Plots the given x and y data using Matplotlib.
+    
+    Args:
+        x (array-like): X coordinates of the data points.
+        y (array-like): Y coordinates of the data points.
+    """
+    try:
+        plt.figure(figsize=(10, 6))
+        plt.plot(x, y, 'b-', label='Data')
+        plt.title('Sample Data Plot')
+        plt.xlabel('X-Axis')
+        plt.ylabel('Y-Axis')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    except Exception as e:
+        print(f"An error occurred while plotting the data: {e}")
+
+def main():
+    """
+    Main execution block that generates data and plots it.
+    """
+    try:
+        # Generate sample data
+        x, y = generate_sample_data()
+
+        # Plot the data
+        plot_data(x, y)
+    except Exception as e:
+        print(f"An error occurred in the main execution block: {e}")
+
+if __name__ == "__main__":
+    main()
