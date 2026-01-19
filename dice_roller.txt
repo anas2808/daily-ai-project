@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <style>
+        /* Basic styling for the body to center content */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        /* Container styling for the dice roller */
+        .dice-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Styling for the dice face display */
+        .dice-face {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+        /* Styling for the roll button */
+        .roll-button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        /* Hover effect for the roll button */
+        .roll-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="dice-container">
+        <div class="dice-face" id="diceFace">1</div>
+        <button class="roll-button" id="rollButton">Roll Dice</button>
+    </div>
+
+    <script>
+        /**
+         * Function to roll a dice and return a random number between 1 and 6.
+         * @returns {number} - A random integer between 1 and 6.
+         */
+        function rollDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        /**
+         * Function to update the dice face on the UI with a new random number.
+         */
+        function updateDiceFace() {
+            try {
+                const diceFaceElement = document.getElementById('diceFace');
+                const newRoll = rollDice();
+                // Update the dice face element with the new roll value
+                diceFaceElement.textContent = newRoll;
+            } catch (error) {
+                console.error("Error updating the dice face:", error);
+            }
+        }
+
+        /**
+         * Main execution block to initialize event listeners.
+         */
+        function main() {
+            const rollButton = document.getElementById('rollButton');
+            // Add click event listener to the roll button
+            rollButton.addEventListener('click', updateDiceFace);
+        }
+
+        // Execute the main function once the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', main);
+    </script>
+</body>
+</html>
