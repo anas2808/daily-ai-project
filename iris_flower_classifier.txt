@@ -1,0 +1,110 @@
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import logging
+
+# Configure logging to help with debugging and understanding the program flow
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def load_and_preprocess_iris_data():
+    """
+    Load the Iris dataset and preprocess it by splitting into train and test sets 
+    and scaling the features.
+    
+    Returns:
+        X_train_scaled (np.ndarray): Scaled training features.
+        X_test_scaled (np.ndarray): Scaled testing features.
+        y_train (np.ndarray): Training labels.
+        y_test (np.ndarray): Testing labels.
+    """
+    try:
+        # Load the dataset
+        iris = load_iris()
+        X, y = iris.data, iris.target
+        logging.info("Successfully loaded Iris dataset.")
+
+        # Split the dataset into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        logging.info("Successfully split data into train and test sets.")
+
+        # Scale features to have mean 0 and variance 1
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        logging.info("Successfully scaled features.")
+
+        return X_train_scaled, X_test_scaled, y_train, y_test
+    except Exception as e:
+        logging.error(f"Error in load_and_preprocess_iris_data: {e}")
+        raise
+
+def train_random_forest_classifier(X_train, y_train):
+    """
+    Train a RandomForestClassifier on the training data.
+    
+    Args:
+        X_train (np.ndarray): Scaled training features.
+        y_train (np.ndarray): Training labels.
+    
+    Returns:
+        RandomForestClassifier: Trained RandomForestClassifier model.
+    """
+    try:
+        # Initialize the Random Forest classifier
+        clf = RandomForestClassifier(n_estimators=100, random_state=42)
+        clf.fit(X_train, y_train)
+        logging.info("Random Forest model training complete.")
+
+        return clf
+    except Exception as e:
+        logging.error(f"Error in train_random_forest_classifier: {e}")
+        raise
+
+def evaluate_model(clf, X_test, y_test):
+    """
+    Evaluate the trained model using the test data.
+    
+    Args:
+        clf (RandomForestClassifier): Trained RandomForestClassifier model.
+        X_test (np.ndarray): Scaled testing features.
+        y_test (np.ndarray): Testing labels.
+    
+    Returns:
+        None
+    """
+    try:
+        # Predict the labels for the test set
+        y_pred = clf.predict(X_test)
+        
+        # Calculate accuracy
+        accuracy = accuracy_score(y_test, y_pred)
+        logging.info(f"Model Accuracy: {accuracy:.2f}")
+
+        # Display classification report
+        logging.info("Classification Report:")
+        logging.info("\n" + classification_report(y_test, y_pred))
+
+        # Display confusion matrix
+        logging.info("Confusion Matrix:")
+        logging.info("\n" + str(confusion_matrix(y_test, y_pred)))
+    except Exception as e:
+        logging.error(f"Error in evaluate_model: {e}")
+        raise
+
+def main():
+    """
+    Main function to execute the workflow of loading data, training the model,
+    and evaluating the model.
+    """
+    try:
+        X_train_scaled, X_test_scaled, y_train, y_test = load_and_preprocess_iris_data()
+        model = train_random_forest_classifier(X_train_scaled, y_train)
+        evaluate_model(model, X_test_scaled, y_test)
+    except Exception as e:
+        logging.error(f"Error in main execution: {e}")
+
+if __name__ == "__main__":
+    main()
