@@ -1,0 +1,120 @@
+import pandas as pd
+import numpy as np
+
+def load_data(file_path):
+    """
+    Load data from a CSV file into a DataFrame.
+    
+    Parameters:
+    file_path (str): The path to the CSV file.
+    
+    Returns:
+    pd.DataFrame: The loaded data as a pandas DataFrame.
+    """
+    try:
+        data = pd.read_csv(file_path)
+        print(f"Data loaded successfully from {file_path}")
+        return data
+    except FileNotFoundError as fnf_error:
+        print(f"Error: {fnf_error}")
+    except pd.errors.EmptyDataError:
+        print("Error: The file is empty.")
+    except pd.errors.ParserError:
+        print("Error: The file could not be parsed.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+def remove_duplicates(data):
+    """
+    Remove duplicate rows from the DataFrame.
+    
+    Parameters:
+    data (pd.DataFrame): The input DataFrame.
+    
+    Returns:
+    pd.DataFrame: The DataFrame with duplicate rows removed.
+    """
+    before_count = data.shape[0]
+    data = data.drop_duplicates()
+    after_count = data.shape[0]
+    print(f"Removed {before_count - after_count} duplicate rows.")
+    return data
+
+def handle_missing_values(data, strategy='mean'):
+    """
+    Handle missing values in the DataFrame using the specified strategy.
+    
+    Parameters:
+    data (pd.DataFrame): The input DataFrame.
+    strategy (str): The strategy to handle missing values ('mean', 'median', 'mode', 'drop').
+    
+    Returns:
+    pd.DataFrame: The DataFrame with missing values handled.
+    """
+    if strategy not in ['mean', 'median', 'mode', 'drop']:
+        raise ValueError("Strategy must be one of: 'mean', 'median', 'mode', 'drop'.")
+
+    if strategy == 'drop':
+        data = data.dropna()
+        print("Dropped missing values.")
+    else:
+        for column in data.columns:
+            if data[column].isnull().sum() > 0:
+                if strategy == 'mean':
+                    fill_value = data[column].mean()
+                elif strategy == 'median':
+                    fill_value = data[column].median()
+                elif strategy == 'mode':
+                    fill_value = data[column].mode()[0]
+                data[column].fillna(fill_value, inplace=True)
+                print(f"Filled missing values in {column} using {strategy}.")
+    return data
+
+def encode_categorical(data):
+    """
+    Encode categorical features in the DataFrame using one-hot encoding.
+    
+    Parameters:
+    data (pd.DataFrame): The input DataFrame.
+    
+    Returns:
+    pd.DataFrame: The DataFrame with categorical features encoded.
+    """
+    categorical_columns = data.select_dtypes(include=['object']).columns
+    data = pd.get_dummies(data, columns=categorical_columns)
+    print(f"Encoded categorical columns: {', '.join(categorical_columns)}")
+    return data
+
+def save_clean_data(data, file_path):
+    """
+    Save the cleaned DataFrame to a CSV file.
+    
+    Parameters:
+    data (pd.DataFrame): The DataFrame to save.
+    file_path (str): The path where the CSV file will be saved.
+    """
+    try:
+        data.to_csv(file_path, index=False)
+        print(f"Cleaned data saved to {file_path}")
+    except Exception as e:
+        print(f"An error occurred while saving the file: {e}")
+
+def main():
+    # Define file paths
+    input_file_path = 'input_data.csv'
+    output_file_path = 'cleaned_data.csv'
+    
+    # Load data
+    data = load_data(input_file_path)
+    
+    if data is not None:
+        # Clean data
+        data = remove_duplicates(data)
+        data = handle_missing_values(data, strategy='mean')
+        data = encode_categorical(data)
+        
+        # Save cleaned data
+        save_clean_data(data, output_file_path)
+
+if __name__ == "__main__":
+    main()
