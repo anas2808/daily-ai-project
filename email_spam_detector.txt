@@ -1,0 +1,130 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score, classification_report
+import logging
+import re
+import string
+
+# Configure logging for the application
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def clean_email_text(email):
+    """
+    Cleans the email text by removing punctuation, numbers, and making it lowercase.
+    
+    :param email: The email text to be cleaned
+    :return: Cleaned email text
+    """
+    try:
+        # Remove punctuation
+        email = email.translate(str.maketrans('', '', string.punctuation))
+        # Remove numbers
+        email = re.sub(r'\d+', '', email)
+        # Convert to lowercase
+        email = email.lower()
+        return email
+    except Exception as e:
+        logging.error(f"Error in cleaning email text: {e}")
+        raise
+
+def load_and_prepare_data(filepath):
+    """
+    Loads the email dataset, performs cleaning and splits the data into training and test sets.
+    
+    :param filepath: Path to the dataset file
+    :return: Tuple of training and test data splits
+    """
+    try:
+        # Load the dataset
+        data = pd.read_csv(filepath, encoding='latin-1')
+        data = data[['v1', 'v2']]
+        data.columns = ['label', 'email']
+        
+        # Clean the email text
+        data['email'] = data['email'].apply(clean_email_text)
+
+        # Encode labels: ham -> 0, spam -> 1
+        data['label'] = data['label'].map({'ham': 0, 'spam': 1})
+
+        # Split the data
+        X_train, X_test, y_train, y_test = train_test_split(data['email'], data['label'], test_size=0.2, random_state=42)
+        return X_train, X_test, y_train, y_test
+    except FileNotFoundError:
+        logging.error("File not found. Please check the file path.")
+        raise
+    except Exception as e:
+        logging.error(f"Error in loading and preparing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """
+    Trains a Naive Bayes classifier on the training data.
+    
+    :param X_train: Training data features
+    :param y_train: Training data labels
+    :return: Trained model and vectorizer
+    """
+    try:
+        # Convert text data to numerical data
+        vectorizer = CountVectorizer()
+        X_train_counts = vectorizer.fit_transform(X_train)
+
+        # Train the Naive Bayes classifier
+        model = MultinomialNB()
+        model.fit(X_train_counts, y_train)
+
+        return model, vectorizer
+    except Exception as e:
+        logging.error(f"Error in training the model: {e}")
+        raise
+
+def evaluate_model(model, vectorizer, X_test, y_test):
+    """
+    Evaluates the trained model on the test data.
+    
+    :param model: Trained model
+    :param vectorizer: CountVectorizer used during training
+    :param X_test: Test data features
+    :param y_test: Test data labels
+    :return: None
+    """
+    try:
+        # Transform test data to numerical data
+        X_test_counts = vectorizer.transform(X_test)
+
+        # Make predictions
+        predictions = model.predict(X_test_counts)
+
+        # Evaluate the model
+        accuracy = accuracy_score(y_test, predictions)
+        report = classification_report(y_test, predictions, target_names=['ham', 'spam'])
+
+        logging.info(f"Model Accuracy: {accuracy*100:.2f}%")
+        logging.info(f"Classification Report:\n{report}")
+    except Exception as e:
+        logging.error(f"Error in evaluating the model: {e}")
+        raise
+
+def main():
+    """
+    Main function to execute the email spam detection process.
+    """
+    try:
+        # Filepath to the dataset
+        filepath = 'spam.csv'
+
+        # Load and prepare data
+        X_train, X_test, y_train, y_test = load_and_prepare_data(filepath)
+
+        # Train the model
+        model, vectorizer = train_model(X_train, y_train)
+
+        # Evaluate the model
+        evaluate_model(model, vectorizer, X_test, y_test)
+    except Exception as e:
+        logging.error(f"Error in main execution: {e}")
+
+if __name__ == "__main__":
+    main()
