@@ -1,0 +1,110 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
+
+def load_dataset(file_path):
+    """
+    Load dataset from a CSV file.
+
+    Args:
+        file_path (str): The path to the CSV file containing the dataset.
+
+    Returns:
+        pd.DataFrame: A pandas DataFrame containing the loaded dataset.
+    """
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError as e:
+        raise Exception(f"File not found: {e}")
+    except pd.errors.ParserError as e:
+        raise Exception(f"Error parsing CSV file: {e}")
+
+def preprocess_data(data):
+    """
+    Preprocess the dataset.
+
+    Args:
+        data (pd.DataFrame): The raw data.
+
+    Returns:
+        Tuple: Features (X) and target (y) variables.
+    """
+    # Assuming the dataset has 'price' as the target and the rest as features
+    if 'price' not in data.columns:
+        raise ValueError("Dataset must contain 'price' column as target.")
+
+    X = data.drop(columns='price')
+    y = data['price']
+
+    # Fill missing values with the mean of the column
+    X.fillna(X.mean(), inplace=True)
+
+    return X, y
+
+def train_model(X, y):
+    """
+    Train a linear regression model.
+
+    Args:
+        X (pd.DataFrame): The feature data.
+        y (pd.Series): The target variable.
+
+    Returns:
+        model: Trained linear regression model.
+    """
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    model = LinearRegression()
+
+    # Fit model
+    model.fit(X_train, y_train)
+
+    # Evaluate model
+    predictions = model.predict(X_test)
+    mse = mean_squared_error(y_test, predictions)
+    r2 = r2_score(y_test, predictions)
+
+    print(f"Model Mean Squared Error: {mse}")
+    print(f"Model R^2 Score: {r2}")
+
+    return model
+
+def make_predictions(model, X_new):
+    """
+    Make predictions using the trained model.
+
+    Args:
+        model: Trained model.
+        X_new (pd.DataFrame): New feature data to predict on.
+
+    Returns:
+        np.ndarray: Predicted values.
+    """
+    if not isinstance(X_new, pd.DataFrame):
+        raise ValueError("Input data must be a pandas DataFrame.")
+
+    predictions = model.predict(X_new)
+    return predictions
+
+def main():
+    # Load dataset
+    file_path = 'house_prices.csv'
+    data = load_dataset(file_path)
+
+    # Preprocess data
+    X, y = preprocess_data(data)
+
+    # Train model
+    model = train_model(X, y)
+
+    # Example of making predictions
+    # Assuming X_new is a DataFrame with the same columns as X
+    # X_new = pd.DataFrame(...) 
+    # predictions = make_predictions(model, X_new)
+    # print("Predictions:", predictions)
+
+if __name__ == "__main__":
+    main()
