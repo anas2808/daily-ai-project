@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Terminal Portfolio</title>
+    <style>
+        /* Main body styling */
+        body {
+            background-color: #000; /* Black background for terminal effect */
+            color: #00FF00; /* Green text color for retro look */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font for terminal feel */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Terminal window styling */
+        .terminal {
+            background-color: #333; /* Dark gray background */
+            border: 2px solid #00FF00; /* Green border */
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 0 10px #00FF00; /* Green shadow for glow effect */
+        }
+
+        /* Command prompt style */
+        .prompt {
+            color: #00FF00;
+        }
+
+        /* Command text style */
+        .command {
+            color: #00FF00;
+            font-weight: bold;
+        }
+
+        /* Response text style */
+        .response {
+            color: #00FF00;
+            margin-bottom: 10px;
+        }
+
+        /* Link style */
+        a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .terminal {
+                width: 90%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <!-- Introduction -->
+        <div class="response">Welcome to My Retro Terminal Portfolio</div>
+        
+        <!-- About Me -->
+        <div class="prompt">
+            <span class="command">> about_me</span>
+        </div>
+        <div class="response">
+            I am a passionate developer with a love for creating clean, efficient, and functional code.
+        </div>
+
+        <!-- Projects -->
+        <div class="prompt">
+            <span class="command">> projects</span>
+        </div>
+        <div class="response">
+            <ul>
+                <li><a href="#" target="_blank">Project 1: Static Website</a></li>
+                <li><a href="#" target="_blank">Project 2: Interactive App</a></li>
+                <li><a href="#" target="_blank">Project 3: Data Analysis Tool</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="prompt">
+            <span class="command">> contact</span>
+        </div>
+        <div class="response">
+            You can reach me at: <a href="mailto:example@example.com">example@example.com</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="response">
+            Thank you for visiting my portfolio. Feel free to explore my projects!
+        </div>
+    </div>
+</body>
+</html>
