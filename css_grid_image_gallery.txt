@@ -1,0 +1,104 @@
+<!-- 
+    HTML/CSS for a Responsive CSS Grid Image Gallery
+    This program creates a simple, responsive image gallery using CSS Grid.
+    The gallery will display images in a grid layout that adjusts according to screen size.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Image Gallery</title>
+    <style>
+        /* Basic reset for margins and paddings */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Container for the gallery */
+        .gallery-container {
+            max-width: 1200px; /* Maximum width for larger screens */
+            margin: 20px auto; /* Center the container with auto margin */
+            padding: 0 15px; /* Padding for smaller screens */
+        }
+
+        /* Title styles */
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Grid container setup */
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+            gap: 15px; /* Gap between grid items */
+        }
+
+        /* Each grid item */
+        .grid-item {
+            overflow: hidden; /* Ensure images fit within the container */
+            border-radius: 8px; /* Rounded corners for images */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        /* Image styling */
+        .grid-item img {
+            width: 100%; /* Full width for responsive fitting */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove bottom space */
+            transition: transform 0.3s ease; /* Smooth transform effect */
+        }
+
+        /* Hover effect on images */
+        .grid-item:hover img {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gallery-container">
+        <h1 class="gallery-title">Responsive CSS Grid Image Gallery</h1>
+        <section class="grid-gallery">
+            <!-- Each grid item contains an image -->
+            <div class="grid-item">
+                <img src="image1.jpg" alt="Description of Image 1">
+            </div>
+            <div class="grid-item">
+                <img src="image2.jpg" alt="Description of Image 2">
+            </div>
+            <div class="grid-item">
+                <img src="image3.jpg" alt="Description of Image 3">
+            </div>
+            <div class="grid-item">
+                <img src="image4.jpg" alt="Description of Image 4">
+            </div>
+            <div class="grid-item">
+                <img src="image5.jpg" alt="Description of Image 5">
+            </div>
+            <div class="grid-item">
+                <img src="image6.jpg" alt="Description of Image 6">
+            </div>
+            <!-- Add more grid items as needed -->
+        </section>
+    </div>
+
+    <!-- Main execution block -->
+    <script>
+        // JavaScript can be added here if needed for additional functionality
+        // For this static gallery, no additional JavaScript is required
+    </script>
+</body>
+
+</html>
