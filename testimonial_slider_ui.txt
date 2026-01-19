@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Slider</title>
+    <style>
+        /* Main body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        
+        /* Slider container styling */
+        .slider-container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Styling for each testimonial slide */
+        .slide {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Styling for the active slide */
+        .active-slide {
+            display: block;
+        }
+        
+        /* Navigation buttons styling */
+        .nav-button {
+            cursor: pointer;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Slide text styling */
+        .testimonial-text {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        
+        /* Author styling */
+        .author {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slide active-slide">
+            <p class="testimonial-text">"This product has completely changed my life for the better!"</p>
+            <p class="author">- Jane Doe</p>
+        </div>
+        <div class="slide">
+            <p class="testimonial-text">"An amazing experience, would definitely recommend to others."</p>
+            <p class="author">- John Smith</p>
+        </div>
+        <div class="slide">
+            <p class="testimonial-text">"Exceptional quality and outstanding customer service."</p>
+            <p class="author">- Emily Clark</p>
+        </div>
+        <div style="text-align: center;">
+            <button class="nav-button" onclick="previousSlide()">Previous</button>
+            <button class="nav-button" onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize slide index
+        let currentSlideIndex = 0;
+
+        // Function to show the next slide
+        function nextSlide() {
+            try {
+                const slides = document.getElementsByClassName('slide');
+                slides[currentSlideIndex].classList.remove('active-slide');
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                slides[currentSlideIndex].classList.add('active-slide');
+            } catch (error) {
+                console.error('Error navigating to the next slide:', error);
+            }
+        }
+
+        // Function to show the previous slide
+        function previousSlide() {
+            try {
+                const slides = document.getElementsByClassName('slide');
+                slides[currentSlideIndex].classList.remove('active-slide');
+                currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                slides[currentSlideIndex].classList.add('active-slide');
+            } catch (error) {
+                console.error('Error navigating to the previous slide:', error);
+            }
+        }
+    </script>
+</body>
+</html>
