@@ -1,0 +1,145 @@
+<!-- 
+  A simple and responsive Pricing Table using HTML and CSS.
+  This structure is designed to be easily understandable and modifiable.
+  Each pricing plan is encapsulated in a 'card', making it modular.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Table</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .pricing-table {
+            display: flex;
+            justify-content: center;
+            padding: 50px 0;
+        }
+
+        .pricing-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 15px;
+            max-width: 300px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-header {
+            background-color: #4CAF50;
+            border-radius: 10px 10px 0 0;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .pricing-price {
+            font-size: 32px;
+            margin: 20px 0;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            border-bottom: 1px solid #eee;
+            margin: 15px 0;
+            padding-bottom: 10px;
+        }
+
+        .pricing-button {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+
+        .pricing-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .pricing-table {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pricing-table">
+        <!-- Basic Plan -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h2>Basic</h2>
+            </div>
+            <p class="pricing-price">$9.99/month</p>
+            <ul class="pricing-features">
+                <li>10 users included</li>
+                <li>2 GB of storage</li>
+                <li>Email support</li>
+                <li>Help center access</li>
+            </ul>
+            <button class="pricing-button">Sign up</button>
+        </div>
+
+        <!-- Standard Plan -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h2>Standard</h2>
+            </div>
+            <p class="pricing-price">$19.99/month</p>
+            <ul class="pricing-features">
+                <li>20 users included</li>
+                <li>10 GB of storage</li>
+                <li>Priority email support</li>
+                <li>Help center access</li>
+            </ul>
+            <button class="pricing-button">Sign up</button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h2>Premium</h2>
+            </div>
+            <p class="pricing-price">$29.99/month</p>
+            <ul class="pricing-features">
+                <li>30 users included</li>
+                <li>20 GB of storage</li>
+                <li>Phone & email support</li>
+                <li>Help center access</li>
+            </ul>
+            <button class="pricing-button">Sign up</button>
+        </div>
+    </div>
+
+</body>
+</html>
