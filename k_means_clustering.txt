@@ -1,0 +1,63 @@
+import numpy as np
+from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import logging
+
+def generate_data(n_samples=300, n_features=2, centers=4, cluster_std=1.0, random_state=42):
+    """
+    Generate synthetic data for clustering using Gaussian blobs.
+    
+    :param n_samples: int, total number of samples.
+    :param n_features: int, number of features for each sample.
+    :param centers: int, number of centers to generate.
+    :param cluster_std: float, standard deviation of the clusters.
+    :param random_state: int, determines random number generation for dataset creation.
+    :return: tuple (X, y) where X is the feature matrix and y is the true labels.
+    """
+    X, y = make_blobs(n_samples=n_samples, n_features=n_features, centers=centers,
+                      cluster_std=cluster_std, random_state=random_state)
+    return X, y
+
+def plot_clusters(X, kmeans):
+    """
+    Plot the clusters with their centroids.
+    
+    :param X: np.ndarray, the feature matrix.
+    :param kmeans: KMeans, fitted KMeans instance.
+    """
+    plt.figure(figsize=(8, 6))
+    plt.scatter(X[:, 0], X[:, 1], c=kmeans.labels_, cmap='viridis', marker='o', edgecolor='k')
+    plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=300, c='red', marker='x')
+    plt.title('K-Means Clustering')
+    plt.xlabel('Feature 1')
+    plt.ylabel('Feature 2')
+    plt.grid(True)
+    plt.show()
+
+def main():
+    try:
+        # Setup logging
+        logging.basicConfig(level=logging.INFO)
+        
+        # Generate synthetic data
+        X, y_true = generate_data(n_samples=300, centers=4)
+        
+        # Create KMeans instance with specified number of clusters
+        kmeans = KMeans(n_clusters=4, random_state=42)
+        
+        # Fit the KMeans model
+        kmeans.fit(X)
+        
+        # Log the results
+        logging.info(f"Cluster centers:\n{kmeans.cluster_centers_}")
+        logging.info(f"Inertia: {kmeans.inertia_}")
+        
+        # Plot the resulting clusters
+        plot_clusters(X, kmeans)
+        
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
