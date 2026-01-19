@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Login Page</title>
+    <style>
+        /* Basic reset for margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Full height background with a dark theme */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        /* Main container for the login form */
+        .login-container {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 40px;
+            width: 300px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        /* Neon effect for headings */
+        .login-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #00ffea;
+            text-shadow: 0 0 5px #00ffea, 0 0 10px #00ffea;
+        }
+
+        /* Style for input fields */
+        .login-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #ffffff;
+            outline: none;
+            box-shadow: 0 0 5px #00ffea;
+        }
+
+        /* Style for the login button */
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #00ffea;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 5px #00ffea, 0 0 10px #00ffea;
+        }
+
+        /* Hover effect for button */
+        .login-button:hover {
+            background-color: #00d4c3;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 400px) {
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container for the login form -->
+    <div class="login-container">
+        <!-- Header with neon effect -->
+        <h2 class="login-header">Login</h2>
+        <!-- Username input field -->
+        <input type="text" class="login-input" placeholder="Username" aria-label="Username" required>
+        <!-- Password input field -->
+        <input type="password" class="login-input" placeholder="Password" aria-label="Password" required>
+        <!-- Login button -->
+        <button type="submit" class="login-button">Login</button>
+    </div>
+</body>
+</html>
